@@ -17,9 +17,7 @@ Route::get('/about', function () {
     return view('about', ['nama' => 'Randi Mulyana', 'title' => 'About']);
 });
 Route::get('/posts', function () {
-    // $posts =Post::with(['author', 'category'])->latest()->get();
-    $posts = Post::latest()->get();
-    return view('posts', ['title' => 'Blog', 'posts' => $posts]);
+    return view('posts', ['title' => 'Blog', 'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->get()]);
 });
 Route::get('/posts/{post:slug}', function(Post $post){
     return view('post', ['title' => 'Single Post', 'post' => $post]);
